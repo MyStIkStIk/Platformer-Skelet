@@ -22,10 +22,12 @@ namespace Platformer_Skelet
         int blockFrame = 0;
         int attackFrame = 0;
         int typeAnimation = 0;
+        int gravity = 0;
 
         public Form1()
         {
             InitializeComponent();
+            characterModel.Location = new Point( 0 , 220 );
             this.KeyDown += new KeyEventHandler(Keyboard);
             this.KeyUp += new KeyEventHandler(FreeKeyb);
             timer1.Interval = 100;
@@ -34,128 +36,6 @@ namespace Platformer_Skelet
             timer2.Interval = 20;
             timer1.Start();
             timer2.Start();
-        }
-
-        private void UpdateMoving(object sender, EventArgs e)
-        {
-            if(typeAnimation == 2)
-            {
-                if(rightSide == true)
-                    characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
-                else
-                    characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
-
-            }
-            else if (typeAnimation == 3)
-            {
-                if (go == false) { }
-                else if (go == true && rightSide == true) { }
-                else if (go == true && rightSide == false) { }
-
-            }
-            else if(typeAnimation == 4)
-            {
-                if (go == false) { }
-                else if (go == true && rightSide == true) { }
-                else if (go == true && rightSide == false) { }
-            }
-            else if(typeAnimation == 5)
-            {
-                if (go == false) { }
-                else if (go == true && rightSide == true) { }
-                else if (go == true && rightSide == false) { }
-            }
-        }
-
-        private void FreeKeyb(object sender, KeyEventArgs e)
-        {
-            if(rightSide == true) {
-                typeAnimation = 0;
-                go = false;
-                jump = false;
-            }
-            if(rightSide == false) { 
-                typeAnimation = 1;
-                go = false;
-                jump = false;
-            }
-        }
-
-        private void Keyboard(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.D)) {
-                rightSide = true;
-                go = true;
-                jump = false;
-                typeAnimation = 2;
-            }
-            else if (e.KeyCode.Equals(Keys.A)) {
-                rightSide = false;
-                go = true;
-                jump = false;
-                typeAnimation = 2;
-            }
-            else if (e.KeyCode == Keys.Space)
-            {
-                go = false;
-                jump = true;
-                typeAnimation = 3;
-            }
-            else if (e.KeyCode == Keys.D & e.KeyCode == Keys.Space) 
-            {
-                rightSide = true;
-                go = true;
-                jump = true;
-                typeAnimation = 3;
-            }
-            else if (e.KeyCode == Keys.A & e.KeyCode == Keys.Space)
-            {
-                rightSide = false;
-                go = true;
-                jump = true;
-                typeAnimation = 3;
-            }
-            else if (e.KeyCode == Keys.Q)
-            {
-                go = false;
-                jump = false;
-                typeAnimation = 4;
-            }
-
-            else if (e.KeyCode == Keys.D & e.KeyCode == Keys.Q)
-            {
-                rightSide = true;
-                go = true;
-                jump = false;
-                typeAnimation = 4;
-            }
-            else if (e.KeyCode == Keys.A & e.KeyCode == Keys.Q)
-            {
-                rightSide = false;
-                go = true;
-                jump = false;
-                typeAnimation = 4;
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                go = false;
-                jump = false;
-                typeAnimation = 5;
-            }
-            else if (e.KeyCode == Keys.D & e.KeyCode == Keys.E)
-            {
-                rightSide = true;
-                go = true;
-                jump = false;
-                typeAnimation = 5;
-            }
-            else if (e.KeyCode == Keys.A & e.KeyCode == Keys.E)
-            {
-                rightSide = false;
-                go = true;
-                jump = false;
-                typeAnimation = 5;
-            }
         }
         private void Update(object sender, EventArgs e)
         {
@@ -174,8 +54,6 @@ namespace Platformer_Skelet
             else if (typeAnimation == 3)
             {
                 AnimationCharacter();
-                jumpFrame++;
-                if (jumpFrame == 1) jumpFrame = 0;
             }
             else if (typeAnimation == 4)
             {
@@ -190,7 +68,98 @@ namespace Platformer_Skelet
                 if (attackFrame == 3) attackFrame = 0;
             }
         }
-                private void AnimationCharacter()
+
+        private void UpdateMoving(object sender, EventArgs e)
+        {
+            if (typeAnimation != 2 && typeAnimation != 4 && typeAnimation != 5)
+                CalculateJump();
+            else if (typeAnimation == 2)
+            {
+                if(rightSide == true)  characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
+                else  characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
+
+            }
+            else if(typeAnimation == 4)
+            {
+            }
+            else if(typeAnimation == 5)
+            {
+                if (go == true && rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 2, characterModel.Location.Y);
+                else if (go == true && rightSide == false) characterModel.Location = new Point(characterModel.Location.X - 2, characterModel.Location.Y);
+            }
+        }
+        public void CalculateJump()
+        {
+            if (characterModel.Location.Y < 220 || jump)
+            {
+                characterModel.Location = new Point(characterModel.Location.X, characterModel.Location.Y + gravity);
+                gravity += 2;
+            }
+            if (characterModel.Location.Y >= 220)
+            {
+                jump = false;
+                if(rightSide)
+                    typeAnimation = 0;
+                else
+                    typeAnimation = 1;
+
+            }
+        }
+        public void AddForce()
+        {
+            if (!jump)
+            {
+                jump = true;
+                gravity = -14;
+            }
+        }
+        private void FreeKeyb(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Space))
+            {
+                typeAnimation = 3;
+                AddForce();
+            }
+            else if (rightSide == true)
+            {
+                typeAnimation = 0;
+                go = false;
+            }
+            else if (rightSide == false)
+            {
+                typeAnimation = 1;
+                go = false;
+            }
+        }
+
+        private void Keyboard(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.D)) {
+                rightSide = true;
+                go = true;
+                if (!jump)
+                    typeAnimation = 2;
+            }
+            else if (e.KeyCode.Equals(Keys.A)) {
+                rightSide = false;
+                go = true;
+                if (!jump)
+                    typeAnimation = 2;
+            }
+            else if (e.KeyCode == Keys.Q)
+            {
+                go = false;
+                    typeAnimation = 4;
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                go = false;
+                typeAnimation = 5;
+            }
+            else if(jump)
+                typeAnimation = 3;
+        }
+        private void AnimationCharacter()
         {
             //stayright
             if (typeAnimation == 0)
@@ -233,14 +202,14 @@ namespace Platformer_Skelet
                 {
                     Image part = new Bitmap(150, 150);
                     Graphics g = Graphics.FromImage(part);
-                    g.DrawImage(Properties.Resources.jumpright,0,0, new Rectangle(new Point(150*jumpFrame,0), new Size(150,150)), GraphicsUnit.Pixel);
+                    g.DrawImage(Properties.Resources.jumpright,0,0, new Rectangle(new Point(0,0), new Size(150,150)), GraphicsUnit.Pixel);
                     characterModel.Image = part;
                 }
                 else
                 {
                     Image part = new Bitmap(150, 150);
                     Graphics g = Graphics.FromImage(part);
-                    g.DrawImage(Properties.Resources.jumpleft, 0, 0, new Rectangle(new Point(150 * jumpFrame, 0), new Size(150, 150)), GraphicsUnit.Pixel);
+                    g.DrawImage(Properties.Resources.jumpleft, 0, 0, new Rectangle(new Point(0, 0), new Size(150, 150)), GraphicsUnit.Pixel);
                     characterModel.Image = part;
                 }
             }
