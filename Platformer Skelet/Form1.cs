@@ -295,6 +295,5 @@ namespace Platformer_Skelet
             Graphics g = e.Graphics;
             DrawMap(g);
         }
-        public static void Collide(Entity entity)
     }
 }
