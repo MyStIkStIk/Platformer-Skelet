@@ -16,6 +16,7 @@ namespace Platformer_Skelet
         bool rightSide = true;
         bool go = false;
         bool jump = false;
+        bool texture = false;
         int walkFrame = 0;
         int stayFrame = 0;
         int blockFrame = 0;
