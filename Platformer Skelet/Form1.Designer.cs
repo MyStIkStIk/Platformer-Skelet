@@ -38,7 +38,7 @@
             // characterModel
             // 
             this.characterModel.Image = global::Platformer_Skelet.Properties.Resources.posright;
-            this.characterModel.Location = new System.Drawing.Point(23, 256);
+            this.characterModel.Location = new System.Drawing.Point(0, 0);
             this.characterModel.Name = "characterModel";
             this.characterModel.Size = new System.Drawing.Size(150, 150);
             this.characterModel.TabIndex = 0;
