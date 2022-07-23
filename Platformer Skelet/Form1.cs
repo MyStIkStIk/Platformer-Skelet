@@ -12,11 +12,10 @@ namespace Platformer_Skelet
 {
     public partial class Form1 : Form
     {
-        public bool SuppressKeyPress { get; set; }
+        //public bool SuppressKeyPress { get; set; }
         bool rightSide = true;
         bool go = false;
         bool jump = false;
-        bool texture = false;
         int walkFrame = 0;
         int stayFrame = 0;
         int blockFrame = 0;
@@ -28,17 +27,17 @@ namespace Platformer_Skelet
         const int blockSize = 75;
         static int[,] map = new int[mapHeight, mapWidth]
         {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
         };
 
@@ -179,27 +178,31 @@ namespace Platformer_Skelet
         }
         private void UpdateMoving(object sender, EventArgs e)
         {
-            if (typeAnimation != 2 && typeAnimation != 4 && typeAnimation != 5)
+            bool collide = Collide();
+            if (collide == false)
             {
-                CalculateJump();
-                if(go == true && rightSide)
-                    characterModel.Location = new Point(characterModel.Location.X + 3, characterModel.Location.Y);
-                else if(go == true && rightSide == false)
-                    characterModel.Location = new Point(characterModel.Location.X - 3, characterModel.Location.Y);
-            }
-            else if (typeAnimation == 2)
-            {
-                if(rightSide == true)  characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
-                else  characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
+                if (typeAnimation != 2 && typeAnimation != 4 && typeAnimation != 5)
+                {
+                    CalculateJump();
+                    if (go == true && rightSide)
+                        characterModel.Location = new Point(characterModel.Location.X + 3, characterModel.Location.Y);
+                    else if (go == true && rightSide == false)
+                        characterModel.Location = new Point(characterModel.Location.X - 3, characterModel.Location.Y);
+                }
+                else if (typeAnimation == 2)
+                {
+                    if (rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
+                    else characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
 
-            }
-            else if(typeAnimation == 4)
-            {
-            }
-            else if(typeAnimation == 5)
-            {
-                if (go == true && rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 2, characterModel.Location.Y);
-                else if (go == true && rightSide == false) characterModel.Location = new Point(characterModel.Location.X - 2, characterModel.Location.Y);
+                }
+                else if (typeAnimation == 4)
+                {
+                }
+                else if (typeAnimation == 5)
+                {
+                    if (go == true && rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 2, characterModel.Location.Y);
+                    else if (go == true && rightSide == false) characterModel.Location = new Point(characterModel.Location.X - 2, characterModel.Location.Y);
+                }
             }
         }
         public void CalculateJump()
@@ -284,17 +287,38 @@ namespace Platformer_Skelet
                 for (int j = 0; j < mapWidth; j++)
                 {
                     if (map[i,j] == 1)
-                    g.DrawImage(Properties.Resources.trava, j * blockSize, i * blockSize, new Rectangle(new Point(0, 0), new Size(blockSize, blockSize)), GraphicsUnit.Pixel);
+                        g.DrawImage(Properties.Resources.trava, j * blockSize, i * blockSize, new Rectangle(new Point(0, 0), new Size(blockSize, blockSize)), GraphicsUnit.Pixel);
                     else if (map[i, j] == 2)
                         g.DrawImage(Properties.Resources.shipi, j * blockSize, i * blockSize, new Rectangle(new Point(0, 0), new Size(blockSize, blockSize)), GraphicsUnit.Pixel);
                 }
-            }
+            } 
         }
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             DrawMap(g);
         }
+        public bool Collide()
+        {
+            bool result = false;
+            for (int i = 0; i < mapHeight; i++)
+            {
+                for (int j = 0; j < mapWidth; j++)
+                {
+                    if (map[i, j] == 1)
+                    {
+                        if (characterModel.Location.X >= j * blockSize && characterModel.Location.X <= (j * blockSize + 75) && characterModel.Location.Y >= i * blockSize && characterModel.Location.Y <= (i * blockSize + 75))
+                            result = true;
+                        else
+                            result = false;
+                    }
+                    else
+                        result = false;
+
+                }
+            }
+            return result;
+        }
     }
+    
 }
