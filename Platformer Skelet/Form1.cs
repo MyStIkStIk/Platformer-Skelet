@@ -12,7 +12,6 @@ namespace Platformer_Skelet
 {
     public partial class Form1 : Form
     {
-        //public bool SuppressKeyPress { get; set; }
         bool rightSide = true;
         bool go = false;
         bool jump = false;
@@ -309,11 +308,9 @@ namespace Platformer_Skelet
                     {
                         if (characterModel.Location.X >= j * blockSize && characterModel.Location.X <= (j * blockSize + 75) && characterModel.Location.Y >= i * blockSize && characterModel.Location.Y <= (i * blockSize + 75))
                             result = true;
-                        else
-                            result = false;
+                        else if(characterModel.Location.X+150 >= j * blockSize && characterModel.Location.X+150 <= (j * blockSize + 75) && characterModel.Location.Y+150 >= i * blockSize && characterModel.Location.Y+150 <= (i * blockSize + 75))
+                            result = true;
                     }
-                    else
-                        result = false;
 
                 }
             }
