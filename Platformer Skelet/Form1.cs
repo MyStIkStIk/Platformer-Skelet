@@ -178,30 +178,27 @@ namespace Platformer_Skelet
         private void UpdateMoving(object sender, EventArgs e)
         {
             bool collide = Collide();
-            if (collide == false)
+            if (typeAnimation != 2 && typeAnimation != 4 && typeAnimation != 5)
             {
-                if (typeAnimation != 2 && typeAnimation != 4 && typeAnimation != 5)
-                {
-                    CalculateJump();
-                    if (go == true && rightSide)
-                        characterModel.Location = new Point(characterModel.Location.X + 3, characterModel.Location.Y);
-                    else if (go == true && rightSide == false)
-                        characterModel.Location = new Point(characterModel.Location.X - 3, characterModel.Location.Y);
-                }
-                else if (typeAnimation == 2)
-                {
-                    if (rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
-                    else characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
+                CalculateJump();
+                if (go == true && rightSide)
+                    characterModel.Location = new Point(characterModel.Location.X + 3, characterModel.Location.Y);
+                else if (go == true && rightSide == false)
+                    characterModel.Location = new Point(characterModel.Location.X - 3, characterModel.Location.Y);
+            }
+            else if (typeAnimation == 2)
+            {
+                if (rightSide == true && collide == false) characterModel.Location = new Point(characterModel.Location.X + 4, characterModel.Location.Y);
+                else if (rightSide == false && collide == false) characterModel.Location = new Point(characterModel.Location.X - 4, characterModel.Location.Y);
 
-                }
-                else if (typeAnimation == 4)
-                {
-                }
-                else if (typeAnimation == 5)
-                {
-                    if (go == true && rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 2, characterModel.Location.Y);
-                    else if (go == true && rightSide == false) characterModel.Location = new Point(characterModel.Location.X - 2, characterModel.Location.Y);
-                }
+            }
+            else if (typeAnimation == 4)
+            {
+            }
+            else if (typeAnimation == 5)
+            {
+                if (go == true && rightSide == true) characterModel.Location = new Point(characterModel.Location.X + 2, characterModel.Location.Y);
+                else if (go == true && rightSide == false) characterModel.Location = new Point(characterModel.Location.X - 2, characterModel.Location.Y);
             }
         }
         public void CalculateJump()
@@ -234,6 +231,7 @@ namespace Platformer_Skelet
         }
         private void FreeKeyb(object sender, KeyEventArgs e)
         {
+            bool collide = Collide();
             if (e.KeyCode.Equals(Keys.Space))
             {
                 typeAnimation = 3;
@@ -241,11 +239,15 @@ namespace Platformer_Skelet
             }
             else if (rightSide == true)
             {
+                if(collide)
+                    characterModel.Location = new Point(characterModel.Location.X - 5, characterModel.Location.Y);
                 typeAnimation = 0;
                 go = false;
             }
             else if (rightSide == false)
             {
+                if (collide)
+                    characterModel.Location = new Point(characterModel.Location.X + 5, characterModel.Location.Y);
                 typeAnimation = 1;
                 go = false;
             }
@@ -306,9 +308,9 @@ namespace Platformer_Skelet
                 {
                     if (map[i, j] == 1)
                     {
-                        if (characterModel.Location.X >= j * blockSize && characterModel.Location.X <= (j * blockSize + 75) && characterModel.Location.Y >= i * blockSize && characterModel.Location.Y <= (i * blockSize + 75))
+                        if (characterModel.Location.X >= (j * blockSize - 4) && characterModel.Location.X <= (j * blockSize + 79) && characterModel.Location.Y >= (i * blockSize) && characterModel.Location.Y <= (i * blockSize + 75))
                             result = true;
-                        else if(characterModel.Location.X+150 >= j * blockSize && characterModel.Location.X+150 <= (j * blockSize + 75) && characterModel.Location.Y+150 >= i * blockSize && characterModel.Location.Y+150 <= (i * blockSize + 75))
+                        else if(characterModel.Location.X+150 >= (j * blockSize - 4) && characterModel.Location.X+150 <= (j * blockSize + 79) && characterModel.Location.Y+150 >= (i * blockSize) && characterModel.Location.Y+150 <= (i * blockSize + 75))
                             result = true;
                     }
 
