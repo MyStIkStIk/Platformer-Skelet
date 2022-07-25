@@ -237,19 +237,27 @@ namespace Platformer_Skelet
                 typeAnimation = 3;
                 AddForce();
             }
-            else if (rightSide == true)
+            else if (e.KeyCode.Equals(Keys.D))
             {
                 if(collide)
                     characterModel.Location = new Point(characterModel.Location.X - 5, characterModel.Location.Y);
                 typeAnimation = 0;
                 go = false;
             }
-            else if (rightSide == false)
+            else if (e.KeyCode.Equals(Keys.A))
             {
                 if (collide)
                     characterModel.Location = new Point(characterModel.Location.X + 5, characterModel.Location.Y);
                 typeAnimation = 1;
                 go = false;
+            }
+            else if (rightSide)
+            {
+                typeAnimation = 0;
+            }
+            else if (!rightSide)
+            {
+                typeAnimation = 1;
             }
         }
         private void Keyboard(object sender, KeyEventArgs e)
